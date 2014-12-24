@@ -1,0 +1,9 @@
+
+body {
+  background-color: yellow;
+}
+
+.demo-header,
+.directive .directive-inner {
+  background-color: white !important;
+}

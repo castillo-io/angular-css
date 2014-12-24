@@ -1,0 +1,5 @@
+
+[ui-view="state1"] .directive-magenta .directive-inner {
+  background-color: rgba(255, 0, 255, 1);
+}
+
