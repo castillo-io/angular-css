@@ -9,7 +9,7 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 [Angular's ngRoute Demo](http://door3.github.io/angular-css)
 
-[AngularUI Router](http://door3.github.io/angular-css/states.html)
+[UI Router Demo](http://door3.github.io/angular-css/states.html)
 
 ### Quick Start
 
