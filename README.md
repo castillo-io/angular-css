@@ -11,6 +11,8 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 [UI Router Demo](http://door3.github.io/angular-css/states.html)
 
+[Demo source code](../tree/gh-pages)
+
 ### Quick Start
 
 Install and manage with Bower.
@@ -19,16 +21,15 @@ Install and manage with Bower.
 $ bower install angular-css
 ````
 
-1) Load the required JavaScript libraries (ngRoute and UI Router are optional). 
+1) Include the required JavaScript libraries in your `index.html` (ngRoute and UI Router are optional). 
 
 ``` html
-<!-- Angular 1.2 does not support css for directives, only routes and states -->
-<script src="/libs/angularjs/1.3.0/angular.min.js"></script>
-<script src="/libs/angularjs/1.3.0/angular-routes.min.js"></script>
-<script src="/libs/door3/1.0/angular-css.min.js"></script>
+<script src="/libs/angularjs/1.3.7/angular.min.js"></script>
+<script src="/libs/angularjs/1.3.7/angular-routes.min.js"></script>
+<script src="/libs/angular-css/angular-css.min.js"></script>
 ````
 
-2) Add door3.css as a dependency for your app.
+2) Add `door3.css` as a dependency for your app.
 
 ``` js
 var myApp = angular.module('myApp', ['ngRoute','door3.css']);
@@ -36,9 +37,9 @@ var myApp = angular.module('myApp', ['ngRoute','door3.css']);
 
 ### Examples
 
-This module can be used by adding a css property in your routes values, directives or by calling the $css service methods from controllers and services.
+This module can be used by adding a css property in your routes values, directives or by calling the `$css` service methods from controllers and services.
 
-The css propery supports a string, an array of strings, object notation or an array of objects.
+The css property supports a string, an array of strings, object notation or an array of objects.
 
 See examples below for more informaton.
 
@@ -83,7 +84,7 @@ myApp.controller('pageCtrl', function ($scope, $css) {
 ```
 
 
-#### For Routes (AngularJS - ngRoute)
+#### For Routes (Angular's ngRoute)
 
 Requires [ngRoute](https://github.com/angular/bower-angular-route) as a dependency
 
@@ -124,7 +125,7 @@ myApp.config(function($routeProvider) {
           href: 'page4/page4.mobile.css',
           /* Media Query support via window.matchMedia API
            * This will only add the stylesheet if the breakpoint matches */
-          media: 'screen and (max-width : 480px)'
+          media: 'screen and (max-width : 768px)'
         }, {
           href: 'page4/page4.print.css',
           media: 'print'
@@ -135,7 +136,7 @@ myApp.config(function($routeProvider) {
 });
 ```
 
-#### For States (AngularUI - UI Router)
+#### For States (UI Router)
 
 Requires [ui.router](https://github.com/angular-ui/ui-router) as a dependency
 
@@ -201,11 +202,9 @@ myApp.config(function($stateProvider) {
       css: [
         {
           href: 'page4/page4.css',
-          bustCache: true,
-          persist: false
         }, {
           href: 'page4/page4.mobile.css',
-          media: 'screen and (max-width : 480px)'
+          media: 'screen and (max-width : 768px)'
         }, {
           href: 'page4/page4.print.css',
           media: 'print'
@@ -216,8 +215,33 @@ myApp.config(function($stateProvider) {
 });
 ```
 
+### Responsive Design
 
-#### Global Defaults
+AngularCSS supports "smart media queries". This means that stylesheets with media queries will be only added when the breakpoint matches.
+This will significantly optimize the load time of your apps.
+
+```js
+css: [
+  {
+    href: 'my-page/my-page.mobile.css',
+    media: 'screen and (max-width: 480px)'
+  }, {
+    href: 'my-page/my-page.tablet.css',
+    media: 'screen and (min-width: 768px) and (max-width: 1024px)'
+  }, {
+    href: 'my-page/my-page.desktop.css',
+    media: 'screen and (min-width: 1224px)'
+  }
+]
+```
+
+### Config
+
+You can configure AngularCSS at the global level or at the stylesheet level.
+
+#### Configuring global options
+
+These options are applied during the `config` phase of your app via `$cssProvider`.
 
 ``` js
 myApp.config(function($cssProvider) {
@@ -233,8 +257,9 @@ myApp.config(function($cssProvider) {
 });
 ```
 
+#### Configuring CSS options
 
-#### CSS Options
+These options are applied at the stylesheet level.
 
 ``` js
 css: {
@@ -248,6 +273,31 @@ css: {
   weight: 0
 }
 ```
+
+### Support
+
+AngularCSS is fully supported by AngularJS 1.3+
+
+There is partial support for AngularJS 1.2. It does not support `css` property via DDO (Directive Definition Object).
+The workarond is to bind (or add) the CSS in the directive's controller or link function via `$css` service.
+
+``` js
+myApp.directive('myDirective', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'my-directive/my-directive.html',
+    controller: function ($scope, $css) {
+      $css.bind('my-directive/my-directive.css', $scope);
+    }
+  }
+});
+
+
+#### Browsers
+
+Chrome, Firefox, Safari, iOS Safari, Android and IE9+
+
+EI9 Does not support [matchMedia](http://caniuse.com/#feat=matchmedia) API. This means that in IE9, stylesheets with media queries will be added without checking if the breakpoint matches.
 
 
 ### Contributing
