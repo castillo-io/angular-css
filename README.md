@@ -7,11 +7,10 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 ### Demos
 
-[Angular's ngRoute Demo](http://door3.github.io/angular-css)
+[Angular's ngRoute Demo](http://door3.github.io/angular-css) ([source](../gh-pages/app.routes.js))
 
-[UI Router Demo](http://door3.github.io/angular-css/states.html)
+[UI Router Demo](http://door3.github.io/angular-css/states.html) ([source](../gh-pages/app.states.js))
 
-[Demo source code](tree/gh-pages)
 
 ### Quick Start
 
@@ -291,6 +290,7 @@ myApp.directive('myDirective', function () {
     }
   }
 });
+```
 
 
 #### Browsers
