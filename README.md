@@ -11,7 +11,7 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 [UI Router Demo](http://door3.github.io/angular-css/states.html)
 
-[Demo source code](../tree/gh-pages)
+[Demo source code](tree/gh-pages)
 
 ### Quick Start
 
