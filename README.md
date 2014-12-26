@@ -76,9 +76,6 @@ myApp.controller('pageCtrl', function ($scope, $css) {
   // Remove all stylesheets
   $css.removeAll();
 
-  // Manual stylesheet preload (via $http request)
-  $css.preload('my-page/my-page.css');
-
 });
 ```
 
