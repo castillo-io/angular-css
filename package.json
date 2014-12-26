@@ -1,0 +1,40 @@
+{
+  "name": "angular-css",
+  "filename": "angular-css.min.js",
+  "description": "CSS on-demand for AngularJS",
+  "version": "1.0.0",
+  "homepage": "http://door3.github.io/angular-css",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/door3/angular-css"
+  },
+  "npmName": "angular-css",
+  "npmFileMap": [
+    {
+      "basePath": "/src/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "files": [
+    "angular-css.min.js"
+  ],
+  "author": {
+    "name": "Alex Castillo",
+    "url": "http://castillo.io",
+    "email": "alex@castillo.io"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/door3/angular-css/blob/master/LICENSE.txt"
+    }
+  ],
+  "keywords": [
+    "angularjs",
+    "ng-route",
+    "ui-router",
+    "css"
+  ]
+}
