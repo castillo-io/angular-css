@@ -36,5 +36,13 @@
     "ng-route",
     "ui-router",
     "css"
-  ]
+  ],
+  "autoupdate": {
+    "source": "git",
+    "target": "git://github.com/door3/angular-css",
+    "basePath": "/src/",
+    "files": [
+      "*.js"
+    ]
+  }
 }
