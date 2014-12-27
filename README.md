@@ -14,11 +14,12 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 ### Quick Start
 
-Install and manage with Bower.
+Install and manage with [Bower](http://bower.io). A [CDN](http://cdnjs.com/libraries/angular-css) is also provided by cdnjs.com
 
 ``` bash
 $ bower install angular-css
-````
+```
+
 
 1) Include the required JavaScript libraries in your `index.html` (ngRoute and UI Router are optional). 
 
@@ -26,13 +27,13 @@ $ bower install angular-css
 <script src="/libs/angularjs/1.3.7/angular.min.js"></script>
 <script src="/libs/angularjs/1.3.7/angular-routes.min.js"></script>
 <script src="/libs/angular-css/angular-css.min.js"></script>
-````
+```
 
 2) Add `door3.css` as a dependency for your app.
 
 ``` js
 var myApp = angular.module('myApp', ['ngRoute','door3.css']);
-````
+```
 
 ### Examples
 
