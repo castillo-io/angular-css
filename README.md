@@ -295,7 +295,7 @@ myApp.directive('myDirective', function () {
 
 Chrome, Firefox, Safari, iOS Safari, Android and IE9+
 
-EI9 Does not support [matchMedia](http://caniuse.com/#feat=matchmedia) API. This means that in IE9, stylesheets with media queries will be added without checking if the breakpoint matches.
+IE9 Does not support [matchMedia](http://caniuse.com/#feat=matchmedia) API. This means that in IE9, stylesheets with media queries will be added without checking if the breakpoint matches.
 
 
 ### Contributing
