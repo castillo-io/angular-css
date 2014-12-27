@@ -41,7 +41,7 @@ This module can be used by adding a css property in your routes values, directiv
 
 The css property supports a string, an array of strings, object notation or an array of objects.
 
-See examples below for more informaton.
+See examples below for more information.
 
 
 #### In Directives
