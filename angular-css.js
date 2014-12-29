@@ -442,7 +442,7 @@
       $directives.push(directive);
       return originalDirective.apply(this, arguments);
     };
-    module.config(['$provide','$injector','$cssProvider', function ($provide, $injector, $cssProvider) {
+    module.config(['$provide','$injector', function ($provide, $injector) {
       angular.forEach($directives, function (directive) {
         var dirProvider = directive.directiveName + 'Directive';
         if ($injector.has(dirProvider)) {
