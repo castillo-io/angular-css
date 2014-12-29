@@ -299,7 +299,8 @@
         if (!stylesheets) {
           stylesheets = [];
           // Add all stylesheets from custom directives to array
-          if ($directives.length) Array.prototype.push.apply(stylesheets, $directives);
+          // @TODO: preload directives once we can parse css on directive register
+          //if ($directives.length) Array.prototype.push.apply(stylesheets, $directives);
           // Add all stylesheets from ngRoute to array
           if ($injector.has('$route')) Array.prototype.push.apply(stylesheets, $css.getFromRoutes($injector.get('$route').routes));
           // Add all stylesheets from UI Router to array
@@ -437,7 +438,7 @@
     module.directive = function(directiveName, directiveFactory) {
       var originalDirectiveFactory = angular.isFunction(directiveFactory) ? 
       directiveFactory : directiveFactory[directiveFactory.length - 1];
-      var directive = directiveFactory();
+      var directive = {};
       directive.directiveName = directiveName;
       $directives.push(directive);
       return originalDirective.apply(this, arguments);
