@@ -1,6 +1,6 @@
 /**
  * CSS on-demand for AngularJS
- * @version v1.0.3
+ * @version v1.0.4
  * @author DOOR3, Alex Castillo
  * @link http://door3.github.io/angular-css
  * @license MIT License, http://www.opensource.org/licenses/MIT
