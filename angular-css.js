@@ -430,9 +430,9 @@
    * in order to broadcast a custom $directiveAdd event
    **/
   var $directives = [];
-  var originalModule1 = angular.module;
+  var originalModule = angular.module;
   angular.module = function () {
-    var module = originalModule1.apply(this, arguments);
+    var module = originalModule.apply(this, arguments);
     var originalDirective = module.directive;
     module.directive = function(directiveName, directiveFactory) {
       var originalDirectiveFactory = angular.isFunction(directiveFactory) ? 
@@ -442,11 +442,6 @@
       $directives.push(directive);
       return originalDirective.apply(this, arguments);
     };
-    return module;
-  };
-  var originalModule2 = angular.module;
-  angular.module = function () {
-    var module = originalModule2.apply(this, arguments);
     module.config(['$provide','$injector','$cssProvider', function ($provide, $injector, $cssProvider) {
       angular.forEach($directives, function (directive) {
         var dirProvider = directive.directiveName + 'Directive';
