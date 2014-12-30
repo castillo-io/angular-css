@@ -1,6 +1,6 @@
 /**
  * CSS on-demand for AngularJS
- * @version v1.0.4
+ * @version v1.0.5
  * @author DOOR3, Alex Castillo
  * @link http://door3.github.io/angular-css
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -299,8 +299,7 @@
         if (!stylesheets) {
           stylesheets = [];
           // Add all stylesheets from custom directives to array
-          // @TODO: preload directives once we can parse css on directive register
-          //if ($directives.length) Array.prototype.push.apply(stylesheets, $directives);
+          if ($directives.length) Array.prototype.push.apply(stylesheets, $directives);
           // Add all stylesheets from ngRoute to array
           if ($injector.has('$route')) Array.prototype.push.apply(stylesheets, $css.getFromRoutes($injector.get('$route').routes));
           // Add all stylesheets from UI Router to array
@@ -438,22 +437,27 @@
     module.directive = function(directiveName, directiveFactory) {
       var originalDirectiveFactory = angular.isFunction(directiveFactory) ? 
       directiveFactory : directiveFactory[directiveFactory.length - 1];
-      var directive = {};
-      directive.directiveName = directiveName;
-      $directives.push(directive);
+      try {
+        var directive = angular.copy(originalDirectiveFactory)();
+        directive.directiveName = directiveName;
+        if (directive.hasOwnProperty('css')) $directives.push(directive);
+      } catch (e) { }
       return originalDirective.apply(this, arguments);
     };
     module.config(['$provide','$injector', function ($provide, $injector) {
-      angular.forEach($directives, function (directive) {
-        var dirProvider = directive.directiveName + 'Directive';
+      angular.forEach($directives, function ($directive) {
+        var dirProvider = $directive.directiveName + 'Directive';
         if ($injector.has(dirProvider)) {
-          $provide.decorator(dirProvider, ['$delegate', '$rootScope', function ($delegate, $rootScope) {
+          $provide.decorator(dirProvider, ['$delegate', '$rootScope', '$timeout', function ($delegate, $rootScope, $timeout) {
             var directive = $delegate[0];
             var compile = directive.compile;
-            directive.compile = function(element, attrs) { 
+            if (directive.css) $directive.css = directive.css;
+            directive.compile = function(tElement, tAttrs) { 
               var link = compile ? compile.apply(this, arguments): false;
               return function(scope, element, attrs) {
-                if (link) link.apply(this, arguments);
+                $timeout(function () {
+                  if (link) link.apply(this, arguments);
+                });
                 $rootScope.$broadcast('$directiveAdd', directive, scope);
               };
             };
