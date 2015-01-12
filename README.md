@@ -5,6 +5,10 @@ Optimize the presentation layer of your single-page apps by dynamically injectin
 
 AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (or [states](https://github.com/angular-ui/ui-router)) change events, adds the CSS defined on the current route and removes the CSS from the previous route. It also works with directives in the same fashion with the compile and scope destroy events. See the code samples below for more details.
 
+##### Read the Article
+
+[Introducing AngularCSS: CSS On-Demand for AngularJS](https://medium.com/@DOOR3/introducing-angularcss-css-on-demand-for-angularjs-be134f2d8f4a)
+
 ### Demos
 
 [Angular's ngRoute Demo](http://door3.github.io/angular-css) ([source](../gh-pages/app.routes.js))
