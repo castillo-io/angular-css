@@ -7,7 +7,7 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 ##### Read the Article
 
-[Introducing AngularCSS: CSS On-Demand for AngularJS](https://medium.com/@DOOR3/introducing-angularcss-css-on-demand-for-angularjs-be134f2d8f4a)
+[Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
 
 ### Demos
 
