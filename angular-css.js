@@ -1,6 +1,6 @@
 /**
- * CSS on-demand for AngularJS
- * @version v1.0.5
+ * AngularCSS - CSS on-demand for AngularJS
+ * @version v1.0.6
  * @author DOOR3, Alex Castillo
  * @link http://door3.github.io/angular-css
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -455,8 +455,9 @@
             directive.compile = function(tElement, tAttrs) { 
               var link = compile ? compile.apply(this, arguments): false;
               return function(scope, element, attrs) {
+                var linkArgs = arguments;
                 $timeout(function () {
-                  if (link) link.apply(this, arguments);
+                  if (link) link.apply(this, linkArgs);
                 });
                 $rootScope.$broadcast('$directiveAdd', directive, scope);
               };
