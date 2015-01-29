@@ -441,6 +441,9 @@
         if (!stylesheets) {
           return $log.error('No stylesheets provided');
         }
+        if (!angular.isArray(stylesheets)) {
+          stylesheets = [stylesheets];
+        }
         // Only proceed based on persist setting
         stylesheets = $filter('filter')(stylesheets, function (stylesheet) {
           return !stylesheet.persist;
