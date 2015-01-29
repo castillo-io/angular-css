@@ -5,7 +5,7 @@
  * @link http://door3.github.io/angular-css
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-/*global angular*/
+
 'use strict';
 
 (function (angular) {
@@ -446,6 +446,7 @@
           return !stylesheet.persist;
         });
         angular.forEach(stylesheets, function(stylesheet) {
+          stylesheet = parse(stylesheet);
           // Get index of current item to be removed based on href
           var index = $rootScope.stylesheets.indexOf($filter('filter')($rootScope.stylesheets, {
             href: stylesheet.href
