@@ -92,6 +92,18 @@
       }
 
       /**
+       * Map breakpoitns defined in defaults to stylesheet media attribute
+       **/
+      function mapBreakpointToMedia(stylesheet) {
+        if (angular.isDefined(options.breakpoints)) {
+          if (stylesheet.breakpoint in options.breakpoints) {
+            stylesheet.media = options.breakpoints[stylesheet.breakpoint];
+          }
+          delete stylesheet.breakpoints;
+        } 
+      }
+
+      /**
        * Parse: returns array with full all object based on defaults
        **/
       function parse(obj) {
@@ -122,6 +134,8 @@
             obj = angular.extend(item, options);
           });
         }
+        // Map breakpoint to media attribute
+        mapBreakpointToMedia(obj);
         return obj;
       }
 
