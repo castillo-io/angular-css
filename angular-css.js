@@ -44,7 +44,8 @@
 
       // Variables - default options that can be overridden from application config
       var mediaQuery = {}, mediaQueryListener = {}, mediaQueriesToIgnore = ['print'], options = angular.extend({}, defaults),
-        container = angular.element(document.querySelector ? document.querySelector(options.container) : document.getElementsByTagName(options.container)[0]);
+        container = angular.element(document.querySelector ? document.querySelector(options.container) : document.getElementsByTagName(options.container)[0]),
+        dynamicPaths = [];
 
       // Parse all directives
       angular.forEach($directives, function (directive, key) {
@@ -69,7 +70,9 @@
       function $routeEventListener(event, current, prev) {
         // Removes previously added css rules
         if (prev) {
-          $css.remove($css.getFromRoute(prev));
+          $css.remove($css.getFromRoute(prev).concat(dynamicPaths));
+          // Reset dynamic paths array
+          dynamicPaths.length = 0;
         }
         // Adds current css rules
         if (current) {
@@ -83,7 +86,9 @@
       function $stateEventListener(event, current, params, prev) {
         // Removes previously added css rules
         if (prev) {
-          $css.remove($css.getFromState(prev));
+          $css.remove($css.getFromState(prev).concat(dynamicPaths));
+          // Reset dynamic paths array
+          dynamicPaths.length = 0;
         }
         // Adds current css rules
         if (current) {
@@ -109,6 +114,10 @@
       function parse(obj) {
         if (!obj) {
           return;
+        }
+        // Function syntax
+        if (angular.isFunction(obj)) {
+          obj = angular.copy($injector.invoke(obj));
         }
         // String syntax
         if (angular.isString(obj)) {
@@ -263,10 +272,16 @@
         if (css) {
           if (angular.isArray(css)) {
             angular.forEach(css, function (cssItem) {
+              if (angular.isFunction(cssItem)) {
+                dynamicPaths.push(parse(cssItem));
+              }
               result.push(parse(cssItem));
             });
           } else {
-          result.push(parse(css));
+            if (angular.isFunction(css)) {
+              dynamicPaths.push(parse(css));
+            }
+            result.push(parse(css));
           }
         }
         return result;
@@ -302,6 +317,9 @@
         if (angular.isDefined(state.views)) {
           angular.forEach(state.views, function (item) {
             if (item.css) {
+              if (angular.isFunction(item.css)) {
+                dynamicPaths.push(parse(item.css));
+              }
               result.push(parse(item.css));
             }
           });
@@ -310,11 +328,17 @@
         if (angular.isDefined(state.children)) {
           angular.forEach(state.children, function (child) {
             if (child.css) {
+              if (angular.isFunction(child.css)) {
+                dynamicPaths.push(parse(child.css));
+              }
               result.push(parse(child.css));
             }
             if (angular.isDefined(child.children)) {
               angular.forEach(child.children, function (childChild) {
                 if (childChild.css) {
+                  if (angular.isFunction(childChild.css)) {
+                    dynamicPaths.push(parse(childChild.css));
+                  }
                   result.push(parse(childChild.css));
                 }
               });
@@ -326,10 +350,16 @@
           // For multiple stylesheets
           if (angular.isArray(state.css)) {
               angular.forEach(state.css, function (itemCss) {
+                if (angular.isFunction(itemCss)) {
+                  dynamicPaths.push(parse(itemCss));
+                }
                 result.push(parse(itemCss));
               });
             // For single stylesheets
           } else {
+            if (angular.isFunction(state.css)) {
+              dynamicPaths.push(parse(state.css));
+            }
             result.push(parse(state.css));
           }
         }
