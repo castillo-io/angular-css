@@ -35,8 +35,8 @@
       weight: 0
     };
 
-    this.$get = ['$rootScope','$injector','$window','$timeout','$compile','$http','$filter','$log',
-                function $get($rootScope, $injector, $window, $timeout, $compile, $http, $filter, $log) {
+    this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log',
+                function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log) {
 
       var $css = {};
 
@@ -377,21 +377,26 @@
           if ($injector.has('$state')) {
             Array.prototype.push.apply(stylesheets, $css.getFromStates($injector.get('$state').get()));
           }
+          stylesheets = filterBy(stylesheets, 'preload');
         }
-        stylesheets = filterBy(stylesheets, 'preload');
-        angular.forEach(stylesheets, function(stylesheet, index) {
-          // Preload via ajax request
-          $http.get(stylesheet.href)
-            .success(function (response) {
-              $log.debug('preload response: ' + response);
-              if (stylesheets.length === (index + 1) && angular.isFunction(callback)) {
-                callback(stylesheets);
-              }
+        if (!angular.isArray(stylesheets)) {
+          stylesheets = [stylesheets];
+        }
+        var stylesheetLoadPromises = [];
+        angular.forEach(stylesheets, function(stylesheet, key) {
+          stylesheet = stylesheets[key] = parse(stylesheet);
+          stylesheetLoadPromises.push(
+            // Preload via ajax request
+            $http.get(stylesheet.href).error(function (response) {
+              $log.error('AngularCSS: Incorrect path for ' + stylesheet.href);
             })
-            .error(function (response) {
-              $log.error('Incorrect path for ' + stylesheet.href);
-            });
+          );
         });
+        if (angular.isFunction(callback)) {
+          $q.all(stylesheetLoadPromises).then(function () {
+            callback(stylesheets);
+          });
+        }
       };
 
       /**
