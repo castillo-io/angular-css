@@ -149,10 +149,10 @@
       $rootScope.$on('$directiveAdd', $directiveAddEventListener);
 
       // Routes event listener ($route required)
-      $rootScope.$on('$routeChangeStart', $routeEventListener);
+      $rootScope.$on('$routeChangeSuccess', $routeEventListener);
 
       // States event listener ($state required)
-      $rootScope.$on('$stateChangeStart', $stateEventListener);
+      $rootScope.$on('$stateChangeSuccess', $stateEventListener);
 
       /**
        * Bust Cache
