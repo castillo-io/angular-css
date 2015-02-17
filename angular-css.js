@@ -27,15 +27,16 @@
 
     // Defaults - default options that can be overridden from application config
     var defaults = this.defaults = {
-      element:   'link',
-      rel:       'stylesheet',
-      type:      'text/css',
+      element: 'link',
+      rel: 'stylesheet',
+      type: 'text/css',
       container: 'head',
-      method:    'append',
-      weight:    0
+      method: 'append',
+      weight: 0
     };
 
-    this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log', function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log) {
+    this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log',
+                function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log) {
 
       var $css = {};
       var template = '<link ng-repeat="stylesheet in stylesheets track by $index | orderBy: \'weight\' " ng-if="!stylesheet.scope" preload="{{stylesheet.preload}}" rel="{{ stylesheet.rel }}" type="{{ stylesheet.type }}" ng-href="{{ stylesheet.href }}" ng-attr-media="{{ stylesheet.media }}">';
@@ -43,12 +44,9 @@
       var preloadCount = 0;
 
       // Variables - default options that can be overridden from application config
-      var mediaQuery = {}, 
-          mediaQueryListener = {}, 
-          mediaQueriesToIgnore = ['print'], 
-          options = angular.extend({}, defaults),
-          container = angular.element(document.querySelector ? document.querySelector(options.container) : document.getElementsByTagName(options.container)[0]),
-          dynamicPaths = [];
+      var mediaQuery = {}, mediaQueryListener = {}, mediaQueriesToIgnore = ['print'], options = angular.extend({}, defaults),
+        container = angular.element(document.querySelector ? document.querySelector(options.container) : document.getElementsByTagName(options.container)[0]),
+        dynamicPaths = [];
 
       // Parse all directives
       angular.forEach($directives, function (directive, key) {
@@ -267,8 +265,8 @@
        */
       function beautifyCSS(css, callback) {
         var beautifiedCSS = css
-           .split('\t').join('    ')
-           .replace(/\s*{\s*/g, ' {\n    ')
+           .split('\t').join('  ')
+           .replace(/\s*{\s*/g, ' {\n  ')
            .replace(/;\s*/g, ';\n    ')
            .replace(/,\s*/g, ', ')
            .replace(/[ ]*}\s*/g, '}\n')
@@ -302,13 +300,13 @@
        */
       function parseAndIsolate(css, stylesheet) {
         var isolatedOutput = '',
+            keyframesRE = /^\s*(from|to)\s*{$/g,
             isolateRE = new RegExp('^' + stylesheet.scope, 'g');
 
         css.split('\n').forEach(function parse(line, indx, arr) {
 
-          // any selector starting with @ 
-          // if (mediaRE.test(line.trim()) || fontFaceRE.test(line.trim())) {
-          if (/^@/.test(line.trim())) {
+          // any selector starting with @ or keyframes
+          if (/^@/.test(line.trim()) || keyframesRE.test(line.trim())) {
             isolatedOutput += line;
           }
 
@@ -337,13 +335,9 @@
         return isolatedOutput;
       }
 
-      // @TODO - add CSS linting
-      // @TODO - add tests
-      // @TODO - thoroughly test all scenarios
-
-      // @TODO - TEMP Public API for Demo
-      $css.beautifyCSS = beautifyCSS;
-      $css.removeComments = removeComments;
+      // Public API for testing & demoing
+      $css.beautifyCSS     = beautifyCSS;
+      $css.removeComments  = removeComments;
       $css.parseAndIsolate = parseAndIsolate;
 
       /**
@@ -634,8 +628,8 @@
         $log.debug('all stylesheets removed');
       };
 
-      // Preload all stylesheets
-      $rootScope.$on('$cssAdd', function preloader(a, b, c, d) {
+      // Preload all stylesheets when $rootScope.stylesheets is ready
+      $rootScope.$on('$cssAdd', function preloader() {
         preloader.loaded = preloader.loaded || false;
         if ($rootScope.stylesheets.length === preloadCount && !preloader.loaded) {
           $css.preload(); 
@@ -648,6 +642,7 @@
     }];
 
   }]);
+
 
   /**
    * Links filter - renders the stylesheets array in html format
@@ -679,7 +674,6 @@
    **/
   var $directives = [];
   var originalModule = angular.module;
-
   angular.module = function () {
     var module = originalModule.apply(this, arguments);
     var originalDirective = module.directive;
@@ -707,7 +701,9 @@
           $provide.decorator(dirProvider, ['$delegate', '$rootScope', '$timeout', function ($delegate, $rootScope, $timeout) {
             var directive = $delegate[0];
             var compile = directive.compile;
-            if (directive.css) $directive.css = directive.css;
+            if (directive.css) {
+              $directive.css = directive.css;
+            }
             directive.compile = function() {
               var link = compile ? compile.apply(this, arguments) : false;
               return function(scope, element) {
@@ -717,7 +713,9 @@
 
                 var linkArgs = arguments;
                 $timeout(function () {
-                  if (link) link.apply(this, linkArgs);
+                  if (link) {
+                    link.apply(this, linkArgs);
+                  }
                 });
                 $rootScope.$broadcast('$directiveAdd', directive, scope);
               };
