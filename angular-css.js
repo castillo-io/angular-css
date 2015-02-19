@@ -335,11 +335,6 @@
         return isolatedOutput;
       }
 
-      // Public API for testing & demoing
-      $css.beautifyCSS     = beautifyCSS;
-      $css.removeComments  = removeComments;
-      $css.parseAndIsolate = parseAndIsolate;
-
       /**
        * Get From Route: returns array of css objects from single route
        **/
