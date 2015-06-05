@@ -40,7 +40,7 @@
 
       var $css = {};
 
-      var template = '<link ng-repeat="stylesheet in stylesheets track by $index | orderBy: \'weight\' " rel="{{ stylesheet.rel }}" type="{{ stylesheet.type }}" ng-href="{{ stylesheet.href }}" ng-attr-media="{{ stylesheet.media }}">';
+      var template = '<link ng-repeat="stylesheet in stylesheets | orderBy: \'weight\' " rel="{{ stylesheet.rel }}" type="{{ stylesheet.type }}" ng-href="{{ stylesheet.href }}" ng-attr-media="{{ stylesheet.media }}">';
 
       // Variables - default options that can be overridden from application config
       var mediaQuery = {}, mediaQueryListener = {}, mediaQueriesToIgnore = ['print'], options = angular.extend({}, defaults),
@@ -135,7 +135,7 @@
         }
         // Object syntax
         if (angular.isObject(obj) && !angular.isArray(obj)) {
-          obj = angular.extend(obj, options);
+          obj = angular.extend({}, options, obj);
         }
         // Array of objects syntax
         if (angular.isArray(obj) && angular.isObject(obj[0])) {
