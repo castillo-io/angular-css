@@ -1,0 +1,127 @@
+<!doctype html>
+<html ng-app="myApp" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>AngularCSS - Routes Demo</title>
+        <meta name="description" content="CSS on-demand for AngularJS">
+        <meta name="viewport" content="width=device-width">
+        <!-- Third-party stylesheets -->
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/github.min.css">
+        <!-- Demo stylesheet -->
+        <link rel="stylesheet" type="text/css" href="css/demo.css">
+        <!-- AngularCSS stylesheets will be added here -->
+    </head>
+    <body ng-cloak ng-controller="globalCtrl">
+
+      <div class="container">
+
+        <div class="navbar-header">
+           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/">AngularCSS</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="link-black" ng-class="{ active: location == '/black' }">
+              <a href="#/black">Black Page</a>
+            </li>
+            <li class="link-cyan" ng-class="{ active: location == '/cyan' }">
+              <a href="#/cyan">Cyan Page</a>
+            </li>
+            <li class="link-magenta" ng-class="{ active: location == '/magenta' }">
+              <a href="#/magenta">Magenta Page</a>
+            </li>
+            <li class="link-yellow" ng-class="{ active: location == '/yellow' }">
+              <a href="#/yellow">Yellow Page</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="link-black">
+              <a target="_blank" href="http://www.github.com/door3/angular-css">GitHub</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="demo-header">
+        <div class="container">
+          <h1>CSS on-demand for AngularJS</h1>
+          <p>Optimize the presentation layer of your single-page apps by dynamically injecting stylesheets as needed.</p>
+        </div>
+      </div>
+
+      <div class="container container-page">
+        <div class="col-xs-12">
+          <h2 class="page-heading"><strong>{{ pageTitle }}</strong> view from ngRoute</h2>
+        </div>
+        <div class="row row-content">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5 col-left">
+            <section ng-view></section>          
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-7 col-right">
+            <article class="directive directive-stylesheets col-xs-12">
+              <div class="directive-inner">
+                <header>
+                  <h2>How it works</h2>
+                  <p>AngularCSS listens for <a target="_blank" href="https://github.com/angular/bower-angular-route">route</a> (or <a target="_blank" href="https://github.com/angular-ui/ui-router">states</a>) change events, adds the CSS defined on the current route and removes the CSS from the previous route. It also works with directives in the same fashion with the compile and scope destroy events.
+                  <p>To illustrate this behavior, each page and directive is defining CSS via this API. The main header changes color based on the current page CSS. Each directive's background color comes from the CSS defined in the Directive Definition Object (DDO). On page change, the CSS defined changes accordingly. See the app source code below for more details.</p>
+                  <hr />
+                </header>
+                <button type="button" class="btn btn-default btn-sm pull-right" ng-click="toggle=!toggle">
+                  <span ng-show="!toggle">See Scope</span>
+                  <span ng-show="toggle">See Tags</span>
+                </button>
+                <div ng-show="toggle">
+                  <h2>What's in scope?</h2>
+                  <div hljs source="stylesheets2 | json" language="javascript"></div>
+                </div>
+                <div ng-show="!toggle">
+                  <h2>What's in the head tag?</h2>
+                  <div hljs source="stylesheets | $cssLinks" language="html"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="container container-page">
+        <div class="col-xs-12 page-title">
+          <h2 class="page-heading">{{ 'Demo Source Code' }}</h2>
+          <p>This demo app is running the code below. It uses Angular's <a target="_blank" href="https://github.com/angular/bower-angular-route">ngRoute</a> and a few custom directives. <br />In the following code, each page and directive defines CSS via this API.</p>
+          <p>For a demo featuring UI Router click <a href="states.html">here</a>.</p>
+          <div hljs source="routeAppSource" language="javascript"></div>
+        </div>
+      </div>
+
+      <footer class="demo-footer">
+       <div class="container">
+        <div class="navbar-footer">
+          Designed, developed and maintained by <a target="_blank" href="http://www.door3.com">DOOR3</a>
+        </div>
+        </div>
+      </footer>
+
+      <!-- AngularJS core and dependencies (from CDN) -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular-route.js"></script>
+
+      <!-- Third-party scripts for demo (from CDN) -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+      <script src="//pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+
+      <!-- AngularCSS library (from repo) -->
+      <script src="/angular-css.js"></script>
+
+      <!-- App Demo scripts -->
+      <script src="modules/app.routes.js"></script>
+      <script src="controllers/app.controller.js"></script>
+
+    </body>
+</html>

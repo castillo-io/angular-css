@@ -1,0 +1,222 @@
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,300,500);
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.9);
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+h1 {
+  letter-spacing: -2px;
+}
+
+h2 {
+  letter-spacing: -1px;
+}
+
+h3 {
+  border-bottom: 0px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 2px;
+  font-size: 21px;
+  margin-top: 5px;
+}
+
+h4 {
+  font-weight: 300;
+}
+
+.page-heading {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+  font-weight: 300;
+}
+
+.navbar-header a,
+.navbar-nav a {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.navbar-brand {
+  font-size: 22px;
+  letter-spacing: -1px;
+}
+
+.navbar-nav .active a {
+  background-color: #f9f9f9;
+}
+
+.demo-header {
+  padding: 45px 0px 35px 0px;
+  font-size: 24px;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.demo-header .container {
+  padding-left: 30px;
+}
+
+.demo-header h1 {
+  font-size: 60px;
+  letter-spacing: -3px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.demo-header p {
+  width: 70%;
+  font-weight: 300;
+}
+
+hr {
+  width: 100%;
+  float: left;
+}
+
+.directive:nth-child(1),
+.directive:nth-child(2) {
+  margin-bottom: 30px;
+}
+
+.directive .directive-inner {
+  padding: 6%;
+  display: block;
+  min-height: 220px;
+}
+
+.container-page {
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+pre {
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0px;
+  word-break: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+pre .hljs {
+  margin-top: 20px;
+  padding: 0;
+  background: none;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+/* Stylesheets Directive */
+
+.directive-stylesheets .directive-inner {
+  background-color: rgba(0,0,0,0.02);
+  padding: 4%;
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.directive-stylesheets h2 {
+  font-weight: 300;
+  margin-bottom: 18px;
+}
+
+.directive-stylesheets pre {
+  line-height: 120%;
+  font-size: 14px;
+}
+
+.demo-footer {
+  background-color: rgba(0,0,0,0.02);
+  padding: 30px 0px;
+  margin-top: 60px;
+}
+/* Responsive */
+
+@media screen and (min-width: 992px) {
+
+  .row-content .col-left {
+    padding-right: 0px;
+  }
+
+  .row-content .col-right {
+    padding-left: 0px;
+  }
+
+}
+
+@media screen and (max-width: 992px) {
+
+  .demo-header h1 {
+    font-size: 50px;
+    letter-spacing: -1px;
+  }
+
+  .demo-header p {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .directive {
+    margin-bottom: 30px;
+  }
+
+  pre .hljs {
+    font-size: 12px;
+  }
+
+}
+
+@media screen and (max-width: 480px) {
+
+  .demo-header {
+    padding: 24px 0px 20px 0px;
+    font-size: 20px;
+  }
+
+  .demo-header h1 {
+    font-size: 38px;
+    letter-spacing: -1px;
+  }
+
+  .container {
+    padding-left: 3% !important;
+    padding-right: 3% !important;
+  }
+
+  [class*="col-"] {
+    padding: 3% !important;
+  }
+
+  .directive {
+    margin-bottom: 0px !important;
+  }
+
+  .directive .directive-inner {
+    
+  }
+
+}
