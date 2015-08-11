@@ -60,7 +60,9 @@
       function $directiveAddEventListener(event, directive, scope) {
         // Binds directive's css
         if (scope && directive.hasOwnProperty('css')) {
-          $css.bind([parse(directive.css)], scope);
+          angular.forEach(directive.css, function(css){
+            $css.bind(parse(css), scope);
+          });
         }
       }
 
@@ -105,7 +107,7 @@
             stylesheet.media = options.breakpoints[stylesheet.breakpoint];
           }
           delete stylesheet.breakpoints;
-        } 
+        }
       }
 
       /**
