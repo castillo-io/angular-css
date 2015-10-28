@@ -16,6 +16,12 @@
    **/
   var angularCSS = angular.module('door3.css', []);
 
+  // Config
+  angularCSS.config(['$logProvider', function ($logProvider) {
+    // Turn off/on in order to see console logs during dev mode
+    $logProvider.debugEnabled(false);
+  }]);
+
   // Provider
   angularCSS.provider('$css', [function $cssProvider() {
 
@@ -28,16 +34,6 @@
       method: 'append',
       weight: 0
     };
-
-    var DEBUG = false;
-
-    // Turn off/on in order to see console logs during dev mode
-    this.debugMode = function(mode) {
-        if (angular.isDefined(mode))
-            DEBUG = mode;
-        return DEBUG;
-    };
-
 
     this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log','$interpolate',
                 function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log,$interpolate) {
@@ -176,8 +172,7 @@
        **/
       function bustCache(stylesheet) {
         if (!stylesheet) {
-          if(DEBUG) $log.error('No stylesheets provided');
-          return;
+          return $log.error('No stylesheets provided');
         }
         var queryString = '?cache=';
         // Append query string for bust cache only once
@@ -191,8 +186,7 @@
        **/
       function filterBy(array, prop) {
         if (!array || !prop) {
-            if(DEBUG) $log.error('filterBy: missing array or property');
-            return;
+          return $log.error('filterBy: missing array or property');
         }
         return $filter('filter')(array, function (item) {
           return item[prop];
@@ -204,8 +198,7 @@
        **/
       function addViaMediaQuery(stylesheet) {
         if (!stylesheet) {
-            if(DEBUG) $log.error('No stylesheet provided');
-            return;
+          return $log.error('No stylesheet provided');
         }
         // Media query object
         mediaQuery[stylesheet.href] = $window.matchMedia(stylesheet.media);
@@ -238,8 +231,7 @@
        **/
       function removeViaMediaQuery(stylesheet) {
         if (!stylesheet) {
-            if(DEBUG) $log.error('No stylesheet provided');
-            return;
+          return $log.error('No stylesheet provided');
         }
         // Remove media query listener
         if ($rootScope && angular.isDefined(mediaQuery)
@@ -254,8 +246,7 @@
        **/
       function isMediaQuery(stylesheet) {
         if (!stylesheet) {
-            if(DEBUG) $log.error('No stylesheet provided');
-            return;
+          return $log.error('No stylesheet provided');
         }
         return !!(
           // Check for media query setting
@@ -272,8 +263,7 @@
        **/
       $css.getFromRoute = function (route) {
         if (!route) {
-            if(DEBUG) $log.error('Get From Route: No route provided');
-            return;
+          return $log.error('Get From Route: No route provided');
         }
         var css = null, result = [];
         if (route.$$route && route.$$route.css) {
@@ -306,8 +296,7 @@
        **/
       $css.getFromRoutes = function (routes) {
         if (!routes) {
-            if(DEBUG) $log.error('Get From Routes: No routes provided');
-            return;
+          return $log.error('Get From Routes: No routes provided');
         }
         var result = [];
         // Make array of all routes
@@ -325,8 +314,7 @@
        **/
       $css.getFromState = function (state) {
         if (!state) {
-            if(DEBUG) $log.error('Get From State: No state provided');
-            return;
+          return $log.error('Get From State: No state provided');
         }
         var result = [];
         // State "views" notation
@@ -391,8 +379,7 @@
        **/
       $css.getFromStates = function (states) {
         if (!states) {
-            if(DEBUG) $log.error('Get From States: No states provided');
-            return;
+          return $log.error('Get From States: No states provided');
         }
         var result = [];
         // Make array of all routes
@@ -439,7 +426,7 @@
           stylesheetLoadPromises.push(
             // Preload via ajax request
             $http.get(stylesheet.href).error(function (response) {
-                if(DEBUG) $log.error('AngularCSS: Incorrect path for ' + stylesheet.href);
+              $log.error('AngularCSS: Incorrect path for ' + stylesheet.href);
             })
           );
         });
@@ -455,8 +442,7 @@
        **/
        $css.bind = function (css, $scope) {
         if (!css || !$scope) {
-            if(DEBUG) $log.error('No scope or stylesheets provided');
-            return;
+          return $log.error('No scope or stylesheets provided');
         }
         var result = [];
         // Adds route css rules to array
@@ -468,10 +454,10 @@
           result.push(parse(css));
         }
         $css.add(result);
-        if(DEBUG) $log.debug('$css.bind(): Added', result);
+        $log.debug('$css.bind(): Added', result);
         $scope.$on('$destroy', function () {
           $css.remove(result);
-          if(DEBUG) $log.debug('$css.bind(): Removed', result);
+          $log.debug('$css.bind(): Removed', result);
         });
        };
 
@@ -480,8 +466,7 @@
        **/
       $css.add = function (stylesheets, callback) {
         if (!stylesheets) {
-            if(DEBUG) $log.error('No stylesheets provided');
-            return;
+          return $log.error('No stylesheets provided');
         }
         if (!angular.isArray(stylesheets)) {
           stylesheets = [stylesheets];
@@ -499,7 +484,7 @@
             else {
               $rootScope.stylesheets.push(stylesheet);
             }
-            if(DEBUG) $log.debug('$css.add(): ' + stylesheet.href);
+            $log.debug('$css.add(): ' + stylesheet.href);
           }
         });
         // Broadcasts custom event for css add
@@ -511,8 +496,7 @@
        **/
       $css.remove = function (stylesheets, callback) {
         if (!stylesheets) {
-            if(DEBUG) $log.error('No stylesheets provided');
-            return;
+          return $log.error('No stylesheets provided');
         }
         if (!angular.isArray(stylesheets)) {
           stylesheets = [stylesheets];
@@ -533,7 +517,7 @@
           }
           // Remove stylesheet via media query
           removeViaMediaQuery(stylesheet);
-          if(DEBUG) $log.debug('$css.remove(): ' + stylesheet.href);
+          $log.debug('$css.remove(): ' + stylesheet.href);
         });
         // Broadcasts custom event for css remove
         $rootScope.$broadcast('$cssRemove', stylesheets, $rootScope.stylesheets);
@@ -547,7 +531,7 @@
         if ($rootScope && $rootScope.hasOwnProperty('stylesheets')) {
           $rootScope.stylesheets.length = 0;
         }
-        if(DEBUG) $log.debug('all stylesheets removed');
+        $log.debug('all stylesheets removed');
       };
 
       // Preload all stylesheets
