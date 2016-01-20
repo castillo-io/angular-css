@@ -60,9 +60,7 @@
       function $directiveAddEventListener(event, directive, scope) {
         // Binds directive's css
         if (scope && directive.hasOwnProperty('css')) {
-          angular.forEach(directive.css, function(css){
-            $css.bind(parse(css), scope);
-          });
+          $css.bind(directive.css, scope);
         }
       }
 
