@@ -35,12 +35,18 @@
       weight: 0
     };
 
-    this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log',
-                function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log) {
+    this.$get = ['$rootScope','$injector','$q','$window','$timeout','$compile','$http','$filter','$log', '$interpolate',
+                function $get($rootScope, $injector, $q, $window, $timeout, $compile, $http, $filter, $log, $interpolate) {
 
       var $css = {};
 
       var template = '<link ng-repeat="stylesheet in stylesheets | orderBy: \'weight\' track by $index " rel="{{ stylesheet.rel }}" type="{{ stylesheet.type }}" ng-href="{{ stylesheet.href }}" ng-attr-media="{{ stylesheet.media }}">';
+
+      // Using correct interpolation symbols.
+      template = template
+        .replace(/{{/g, $interpolate.startSymbol())
+        .replace(/}}/g, $interpolate.endSymbol())
+      ;
 
       // Variables - default options that can be overridden from application config
       var mediaQuery = {}, mediaQueryListener = {}, mediaQueriesToIgnore = ['print'], options = angular.extend({}, defaults),
