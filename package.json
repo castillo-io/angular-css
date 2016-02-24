@@ -45,7 +45,7 @@
   "bugs": {
     "url": "https://github.com/door3/angular-css/issues"
   },
-  "main": "angular-css.js",
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "test": "grunt test"
