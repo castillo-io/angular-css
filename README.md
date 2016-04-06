@@ -359,7 +359,7 @@ AngularCSS is not necessary in Angular 2! Angular 2 ships with a similar feature
   templateUrl: 'app/components/my-component/my-component.html',
   styleUrls: ['app/components/my-component/my-component.css'],
 })
-``
+```
 
 #### Browsers
 
