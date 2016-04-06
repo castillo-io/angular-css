@@ -66,9 +66,7 @@
       function $directiveAddEventListener(event, directive, scope) {
         // Binds directive's css
         if (scope && directive.hasOwnProperty('css')) {
-          angular.forEach(directive.css, function(css){
-            $css.bind(parse(css), scope);
-          });
+          $css.bind(directive.css, scope);
         }
       }
 
@@ -576,6 +574,17 @@
    **/
   var $directives = [];
   var originalModule = angular.module;
+  var arraySelect = function(array, action) {
+    return array.reduce(
+      function(previous, current) {
+        previous.push(action(current));
+        return previous;
+      }, []);
+    };
+  var arrayExists = function(array, value) {
+    return array.indexOf(value) > -1;
+  };
+
   angular.module = function () {
     var module = originalModule.apply(this, arguments);
     var originalDirective = module.directive;
@@ -585,36 +594,40 @@
       try {
         var directive = angular.copy(originalDirectiveFactory)();
         directive.directiveName = directiveName;
-        if (directive.hasOwnProperty('css')) {
-          $directives.push(directive);
+        if (directive.hasOwnProperty('css') && !arrayExists(arraySelect($directives, function(x) {return x.dir.directiveName}), directiveName)) {
+          $directives.push({dir: directive, handled: false});
         }
       } catch (e) { }
       return originalDirective.apply(this, arguments);
     };
     module.config(['$provide','$injector', function ($provide, $injector) {
-      angular.forEach($directives, function ($directive) {
-        var dirProvider = $directive.directiveName + 'Directive';
-        if ($injector.has(dirProvider)) {
-          $provide.decorator(dirProvider, ['$delegate', '$rootScope', '$timeout', function ($delegate, $rootScope, $timeout) {
-            var directive = $delegate[0];
-            var compile = directive.compile;
-            if (directive.css) {
-              $directive.css = directive.css;
-            }
-            directive.compile = function() {
-              var link = compile ? compile.apply(this, arguments): false;
-              return function(scope) {
-                var linkArgs = arguments;
-                $timeout(function () {
-                  if (link) {
-                    link.apply(this, linkArgs);
-                  }
-                });
-                $rootScope.$broadcast('$directiveAdd', directive, scope);
+      angular.forEach($directives, function ($dir) {
+        if (!$dir.handled) {
+          var $directive = $dir.dir;
+          var dirProvider = $directive.directiveName + 'Directive';
+          if ($injector.has(dirProvider)) {
+            $dir.handled = true;
+            $provide.decorator(dirProvider, ['$delegate', '$rootScope', '$timeout', function ($delegate, $rootScope, $timeout) {
+              var directive = $delegate[0];
+              var compile = directive.compile;
+              if (directive.css) {
+                $directive.css = directive.css;
+              }
+              directive.compile = function() {
+                var link = compile ? compile.apply(this, arguments): false;
+                return function(scope) {
+                  var linkArgs = arguments;
+                  $timeout(function () {
+                    if (link) {
+                      link.apply(this, linkArgs);
+                    }
+                  });
+                  $rootScope.$broadcast('$directiveAdd', directive, scope);
+                };
               };
-            };
-            return $delegate;
-          }]);
+              return $delegate;
+            }]);
+          }
         }
       });
     }]);
