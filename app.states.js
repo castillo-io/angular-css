@@ -1,16 +1,16 @@
 
 /**
- * Include 'door3.css' as a dependency
+ * Include 'angularCSS' as a dependency
  * ui.router is optional (no configuration required)
  */
-var myApp = angular.module('myApp', ['ui.router','door3.css','hljs']);
+var myApp = angular.module('myApp', ['ui.router','angularCSS','hljs']);
 
 /**
  * States definition example
  */
 myApp.config(function($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.otherwise('/')
+  $urlRouterProvider.otherwise('/');
 
   /**
    * State provider settings
@@ -111,7 +111,7 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
       },
       css: [
         {
-          href: 'pages/yellow/page-yellow.css',
+          href: 'pages/yellow/page-yellow.css'
         }, {
           href: 'pages/yellow/page-yellow.mobile.css',
           /* Media Query support via window.matchMedia API
@@ -136,26 +136,16 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
  * Directive Definition Object (DDO) examples
  */
 
-myApp.directive('black', function () {
-  return {
-    restrict: 'E',
-    replace: true,
-    templateUrl: 'directives/black/directive-black.html',
-    /* Binding css to directives */
-    css: 'directives/black/directive-black.css'
-  }
+myApp.component('black', {
+  templateUrl: 'directives/black/directive-black.html',
+  css: 'directives/black/directive-black.css' /* Binding css to component */
 });
 
-myApp.directive('cyan', function () {
-  return {
-    restrict: 'E',
-    replace: true,
-    templateUrl: 'directives/cyan/directive-cyan.html',
-    /* Same syntax as in the states example applies here */
-    css: {
-      href: 'directives/cyan/directive-cyan.css',
-      bustCache: true
-    }
+myApp.component('cyan', {
+  templateUrl: 'directives/cyan/directive-cyan.html',
+  css: { /* Same syntax as in the routes example applies here */
+    href: 'directives/cyan/directive-cyan.css',
+    bustCache: true
   }
 });
 
