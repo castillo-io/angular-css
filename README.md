@@ -7,37 +7,43 @@ AngularCSS listens for [route](https://github.com/angular/bower-angular-route) (
 
 ##### Read the Article
 
-[Introducing AngularCSS: CSS On-Demand for AngularJS](http://door3.com/insights/introducing-angularcss-css-demand-angularjs)
+[Introducing AngularCSS: CSS On-Demand for AngularJS](http://www.castillo.io/blog/2015/2/1/introducing-angularcss-css-on-demand-for-angularjs)
 
 ### Demos
 
-[Angular's ngRoute Demo](http://door3.github.io/angular-css) ([source](../gh-pages/app.routes.js))
+[Angular's ngRoute Demo](http://castillo-io.github.io/angular-css) ([source](../gh-pages/app.routes.js))
 
-[UI Router Demo](http://door3.github.io/angular-css/states.html) ([source](../gh-pages/app.states.js))
+[UI Router Demo](http://castillo-io.github.io/angular-css/states.html) ([source](../gh-pages/app.states.js))
 
 
 ### Quick Start
 
-Install and manage with [Bower](http://bower.io). A [CDN](http://cdnjs.com/libraries/angular-css) is also provided by cdnjs.com
+Install and manage with [Bower](http://bower.io) or [jspm](http://jspm.io). A [CDN](http://cdnjs.com/libraries/angular-css) is also provided by cdnjs.com
 
 ``` bash
 $ bower install angular-css
+```
+
+``` bash
+$ jspm install github:castillo-io/angular-css
 ```
 
 
 1) Include the required JavaScript libraries in your `index.html` (ngRoute and UI Router are optional). 
 
 ``` html
-<script src="/libs/angularjs/1.3.7/angular.min.js"></script>
-<script src="/libs/angularjs/1.3.7/angular-routes.min.js"></script>
+<script src="/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="/libs/angularjs/1.5.3/angular-routes.min.js"></script>
 <script src="/libs/angular-css/angular-css.min.js"></script>
 ```
 
-2) Add `door3.css` as a dependency for your app.
+2) Add `angularCSS` as a dependency for your app.
 
 ``` js
-var myApp = angular.module('myApp', ['ngRoute','door3.css']);
+var myApp = angular.module('myApp', ['ngRoute','angularCSS']);
 ```
+
+NOTE: The module name "door3.css" is now deprecated.
 
 ### Examples
 
@@ -47,6 +53,14 @@ The css property supports a string, an array of strings, object notation or an a
 
 See examples below for more information.
 
+#### In Components
+
+``` js
+myApp.component('myComponent', {
+  css: 'my-component/my-component.css' // <--- magic!
+  templateUrl: 'my-component/my-component.html',
+});
+```
 
 #### In Directives
 
@@ -240,7 +254,7 @@ $routeProvider
   });
 ```
 
-Even though you can use the `media` property to specify media queries, the best way to manage your breakpoins is by settings them in the provider's defaults. For example:
+Even though you can use the `media` property to specify media queries, the best way to manage your breakpoints is by settings them in the provider's defaults. For example:
 
 ```js
 myApp.config(function($routeProvider, $cssProvider) {
@@ -316,9 +330,10 @@ css: {
 ### Support
 
 AngularCSS is fully supported by AngularJS 1.3+
+Now added AngularJS 1.5 support for .component()
 
 There is partial support for AngularJS 1.2. It does not support `css` property via DDO (Directive Definition Object).
-The workarond is to bind (or add) the CSS in the directive's controller or link function via `$css` service.
+The workaround is to bind (or add) the CSS in the directive's controller or link function via `$css` service.
 
 ``` js
 myApp.directive('myDirective', function () {
@@ -332,6 +347,19 @@ myApp.directive('myDirective', function () {
 });
 ```
 
+### Angular 2
+
+Can I use AngularCSS in Angular 2?
+
+AngularCSS is not necessary in Angular 2! Angular 2 ships with a similar feature out of the box. It's called 'styleUrls' and it looks like this:
+
+``` js
+@Component({
+  selector: 'my-component',
+  templateUrl: 'app/components/my-component/my-component.html',
+  styleUrls: ['app/components/my-component/my-component.css'],
+})
+``
 
 #### Browsers
 
@@ -349,7 +377,7 @@ Please submit all pull requests the against master branch. If your pull request 
 ```
 The MIT License
 
-Copyright (c) 2014 DOOR3, Alex Castillo
+Copyright (c) 2016 Alex Castillo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

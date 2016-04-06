@@ -1,8 +1,8 @@
 {
   "name": "angular-css",
   "main": "./angular-css.js",
-  "version": "1.0.7",
-  "homepage": "http://door3.github.io/angular-css",
+  "version": "1.0.8",
+  "homepage": "http://castillo-io.github.io/angular-css",
   "authors": [
     "Alex Castillo <alex@castillo.io>"
   ],
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/door3/angular-css"
+    "url": "git://github.com/castillo-io/angular-css"
   },
   "license": "MIT",
   "ignore": [

@@ -2,11 +2,11 @@
   "name": "angular-css",
   "filename": "angular-css.js",
   "description": "CSS on-demand for AngularJS",
-  "version": "1.0.7",
-  "homepage": "http://door3.github.io/angular-css",
+  "version": "1.0.8",
+  "homepage": "http://castillo.github.io/angular-css",
   "repository": {
     "type": "git",
-    "url": "git://github.com/door3/angular-css"
+    "url": "git://github.com/castillo-io/angular-css"
   },
   "npmName": "angular-css",
   "npmFileMap": [
@@ -25,7 +25,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/door3/angular-css/blob/master/LICENSE.txt"
+      "url": "https://github.com/castillo-io/angular-css/blob/master/LICENSE.txt"
     }
   ],
   "keywords": [
@@ -36,14 +36,14 @@
   ],
   "autoupdate": {
     "source": "git",
-    "target": "git://github.com/door3/angular-css",
+    "target": "git://github.com/castillo-io/angular-css",
     "basePath": "/",
     "files": [
       "*.js"
     ]
   },
   "bugs": {
-    "url": "https://github.com/door3/angular-css/issues"
+    "url": "https://github.com/castillo-io/angular-css/issues"
   },
   "main": "index.js",
   "license": "MIT",
