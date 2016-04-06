@@ -610,7 +610,7 @@
     var originalDirective = module.directive;
     module.directive = function(directiveName, directiveFactory) {
       var originalDirectiveFactory = angular.isFunction(directiveFactory) ?
-      directiveFactory : directiveFactory[directiveFactory.length - 1];
+      directiveFactory : directiveFactory[directiveFactory ? (directiveFactory.length - 1) : 0];
       try {
         var directive = angular.copy(originalDirectiveFactory)();
         directive.directiveName = directiveName;
