@@ -614,24 +614,32 @@
       try {
         var directive = angular.copy(originalDirectiveFactory)();
         directive.directiveName = directiveName;
-        if (directive.hasOwnProperty('css') && !arrayExists(arraySelect($directives, function(x) {return x.dir.directiveName}), directiveName)) {
-          $directives.push({dir: directive, handled: false});
+        if (directive.hasOwnProperty('css') && !arrayExists(arraySelect($directives, function(x) {return x.ddo.directiveName}), directiveName)) {
+          $directives.push({ ddo: directive, handled: false });
         }
       } catch (e) { }
       return originalDirective.apply(this, arguments);
     };
+    var originalComponent = module.component;
+    module.component = function (componentName, componentObject) {
+      componentObject.directiveName = componentName;
+      if (componentObject.hasOwnProperty('css') && !arrayExists(arraySelect($directives, function(x) {return x.ddo.directiveName}), componentName)) {
+        $directives.push({ ddo: componentObject, handled: false });
+      }
+      return originalComponent.apply(this, arguments);
+    };
     module.config(['$provide','$injector', function ($provide, $injector) {
       angular.forEach($directives, function ($dir) {
         if (!$dir.handled) {
-          var $directive = $dir.dir;
+          var $directive = $dir.ddo;
           var dirProvider = $directive.directiveName + 'Directive';
           if ($injector.has(dirProvider)) {
             $dir.handled = true;
             $provide.decorator(dirProvider, ['$delegate', '$rootScope', '$timeout', function ($delegate, $rootScope, $timeout) {
               var directive = $delegate[0];
               var compile = directive.compile;
-              if (directive.css) {
-                $directive.css = directive.css;
+              if (!directive.css) {
+                directive.css = $directive.css;
               }
               directive.compile = function() {
                 var link = compile ? compile.apply(this, arguments): false;
