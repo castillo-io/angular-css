@@ -14,7 +14,13 @@
    * AngularCSS Module
    * Contains: config, constant, provider and run
    **/
-  var angularCSS = angular.module('door3.css', []);
+  var angularCSS = angular.module('angularCSS', []);
+
+  // Old module name handler
+  angular.module('door3.css', [])
+    .run(function () {
+      console.error('AngularCSS: The module name "door3.css" is now deprecated. Please use "angularCSS" instead.');
+    });
 
   // Provider
   angularCSS.provider('$css', [function $cssProvider() {
@@ -48,8 +54,7 @@
       // Using correct interpolation symbols.
       template = template
         .replace(/{{/g, $interpolate.startSymbol())
-        .replace(/}}/g, $interpolate.endSymbol())
-      ;
+        .replace(/}}/g, $interpolate.endSymbol());
 
       // Variables - default options that can be overridden from application config
       var mediaQuery = {}, mediaQueryListener = {}, mediaQueriesToIgnore = ['print'], options = angular.extend({}, defaults),
@@ -227,7 +232,7 @@
               }
             }
           });
-        }
+        };
         // Listen for media query changes
         mediaQuery[stylesheet.href].addListener(mediaQueryListener[stylesheet.href]);
         // Invoke first media query check
@@ -492,7 +497,7 @@
           // Avoid adding duplicate stylesheets
           if (stylesheet.href && !$filter('filter')($rootScope.stylesheets, { href: stylesheet.href }).length) {
             // Bust Cache feature
-            bustCache(stylesheet)
+            bustCache(stylesheet);
             // Media Query add support check
             if (isMediaQuery(stylesheet)) {
               addViaMediaQuery(stylesheet);
@@ -571,7 +576,7 @@
       var result = '';
       angular.forEach(stylesheets, function (stylesheet) {
         result += '<link rel="' + stylesheet.rel + '" type="' + stylesheet.type + '" href="' + stylesheet.href + '"';
-        result += (stylesheet.media ? ' media="' + stylesheet.media + '"' : '')
+        result += (stylesheet.media ? ' media="' + stylesheet.media + '"' : '');
         result += '>\n\n';
       });
       return result;
