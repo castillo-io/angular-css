@@ -254,7 +254,7 @@ $routeProvider
   });
 ```
 
-Even though you can use the `media` property to specify media queries, the best way to manage your breakpoints is by settings them in the provider's defaults. For example:
+Even though you can use the `media` property to specify media queries, the best way to manage your breakpoints is by settings them in the provider's default settings. For example:
 
 ```js
 myApp.config(function($routeProvider, $cssProvider) {
@@ -290,11 +290,11 @@ myApp.config(function($routeProvider, $cssProvider) {
 
 ### Config
 
-You can configure AngularCSS at the global level or at the stylesheet level.
+You can configure AngularCSS at the global or stylesheet level.
 
 #### Configuring global options
 
-These options are applied during the `config` phase of your app via `$cssProvider`.
+These options are applied during your app's `config` phase or via `$cssProvider`.
 
 ``` js
 myApp.config(function($cssProvider) {
@@ -329,8 +329,7 @@ css: {
 
 ### Support
 
-AngularCSS is fully supported by AngularJS 1.3+
-Now added AngularJS 1.5 support for .component()
+AngularCSS is fully supported by AngularJS >= v1.3 && <= v1.5
 
 There is partial support for AngularJS 1.2. It does not support `css` property via DDO (Directive Definition Object).
 The workaround is to bind (or add) the CSS in the directive's controller or link function via `$css` service.
@@ -351,7 +350,7 @@ myApp.directive('myDirective', function () {
 
 Can I use AngularCSS in Angular 2?
 
-AngularCSS is not necessary in Angular 2! Angular 2 ships with a similar feature out of the box. It's called 'styleUrls' and it looks like this:
+AngularCSS is not necessary in Angular 2! Angular 2 ships with a similar feature out of the box. It's called `styles` and `styleUrls` and it looks like this:
 
 ``` js
 @Component({
