@@ -32,8 +32,8 @@ $ jspm install github:castillo-io/angular-css
 1) Include the required JavaScript libraries in your `index.html` (ngRoute and UI Router are optional). 
 
 ``` html
-<script src="/libs/angularjs/1.5.3/angular.min.js"></script>
-<script src="/libs/angularjs/1.5.3/angular-routes.min.js"></script>
+<script src="/libs/angularjs/1.5.6/angular.min.js"></script>
+<script src="/libs/angularjs/1.5.6/angular-routes.min.js"></script>
 <script src="/libs/angular-css/angular-css.min.js"></script>
 ```
 
